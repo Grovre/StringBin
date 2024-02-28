@@ -20,7 +20,7 @@ public class StringBinController(StringBinDbContext db) : ControllerBase
 
         var entries = await db.EntrySet.ToListAsync();
         foreach (var e in entries)
-            Console.WriteLine($"Id: {e.Id}\nTitle: {e.Title}\nBody: {e.Body}");
+            Console.WriteLine($"Id: {e.Id}\nTitle: {e.Content.Title}\nBody: {e.Content.Body}");
 
         return new AcceptedResult();
     }
