@@ -16,9 +16,13 @@ public class StringBinEntry
     {
     }
 
-    public StringBinEntry(string title, string body, Guid id)
+    public StringBinEntry(string title, string body, Guid id) : this(new(title, body), id)
     {
-        Content = new StringBinContent(title, body);
+    }
+
+    public StringBinEntry(StringBinContent content, Guid id)
+    {
+        Content = content;
         Id = id;
     }
 

@@ -10,10 +10,10 @@ namespace StringBin.Controller.api.v1;
 public class StringBinController(StringBinDbContext db) : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult> AddEntry(string title, string body)
+    public async Task<ActionResult> AddEntry(StringBinEntry.StringBinContent content)
     {
         var guid = Guid.NewGuid();
-        var entry = new StringBinEntry(title, body, guid);
+        var entry = new StringBinEntry(content, guid);
 
         db.Add(entry);
         await db.SaveChangesAsync();
