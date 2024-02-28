@@ -1,7 +1,10 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
 
 namespace StringBin.Models;
 
+[PrimaryKey(nameof(Id))]
 public class StringBinEntry
 {
     [JsonPropertyName("id")]

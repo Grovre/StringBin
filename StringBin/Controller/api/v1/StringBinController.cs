@@ -18,10 +18,15 @@ public class StringBinController(StringBinDbContext db) : ControllerBase
         db.Add(entry);
         await db.SaveChangesAsync();
 
-        var entries = await db.EntrySet.ToListAsync();
+        // ToListAsync errors because IQueryable can't be used with async?
+        var entries = db.EntrySet.ToList();
         foreach (var e in entries)
             Console.WriteLine($"Id: {e.Id}\nTitle: {e.Title}\nBody:\n{e.Body}");
 
-        return new AcceptedResult();
+        return new CreatedAtActionResult(
+            nameof(AddEntry), 
+            nameof(StringBinController), 
+            null, 
+            null);
     }
 }
