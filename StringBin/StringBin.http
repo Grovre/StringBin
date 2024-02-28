@@ -1,0 +1,6 @@
+@StringBin_HostAddress = http://localhost:5047
+
+GET {{StringBin_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
