@@ -22,6 +22,20 @@ public class StringBinController(StringBinDbContext db) : ControllerBase
         foreach (var e in entries)
             Console.WriteLine($"Id: {e.Id}\nTitle: {e.Content.Title}\nBody: {e.Content.Body}");
 
-        return new AcceptedResult();
+        return new JsonResult(new
+        {
+            id = guid
+        });
+    }
+
+    [HttpGet]
+    public async Task<ActionResult> GetEntry(Guid id)
+    {
+        var entry = await db.EntrySet.FindAsync(id);
+
+        if (entry == null)
+            return new NotFoundObjectResult(null);
+
+        return new JsonResult(entry);
     }
 }
