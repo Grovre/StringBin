@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using StringBin.Repository;
+
 namespace StringBin;
 
 public class Program
@@ -14,6 +17,11 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         builder.Services.AddControllers();
+
+        builder.Services.AddDbContext<StringBinDbContext>(options =>
+        {
+            options.UseInMemoryDatabase("InMemoryDb");
+        });
 
         var app = builder.Build();
 
