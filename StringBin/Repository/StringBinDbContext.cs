@@ -5,7 +5,7 @@ namespace StringBin.Repository;
 
 public class StringBinDbContext : DbContext
 {
-    public DbSet<StringBinEntry> EntrySet { get; }
+    public DbSet<StringBinEntry> EntrySet { get; private set; }
 
     public StringBinDbContext(DbContextOptions options) : base(options)
     {

@@ -5,11 +5,11 @@ using StringBin.Repository;
 
 namespace StringBin.Controller.api.v1;
 
-[Route("/")]
+[Route("api/v1")]
 [ApiController]
 public class StringBinController(StringBinDbContext db) : ControllerBase
 {
-    [HttpPost("add-entry")]
+    [HttpPost]
     public async Task<ActionResult> AddEntry(string title, string body)
     {
         var guid = Guid.NewGuid();
@@ -18,15 +18,10 @@ public class StringBinController(StringBinDbContext db) : ControllerBase
         db.Add(entry);
         await db.SaveChangesAsync();
 
-        // ToListAsync errors because IQueryable can't be used with async?
-        var entries = db.EntrySet.ToList();
+        var entries = await db.EntrySet.ToListAsync();
         foreach (var e in entries)
-            Console.WriteLine($"Id: {e.Id}\nTitle: {e.Title}\nBody:\n{e.Body}");
+            Console.WriteLine($"Id: {e.Id}\nTitle: {e.Title}\nBody: {e.Body}");
 
-        return new CreatedAtActionResult(
-            nameof(AddEntry), 
-            nameof(StringBinController), 
-            null, 
-            null);
+        return new AcceptedResult();
     }
 }

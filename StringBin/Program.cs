@@ -21,7 +21,7 @@ public class Program
         builder.Services.AddDbContext<StringBinDbContext>(options =>
         {
             options.UseInMemoryDatabase("InMemoryDb");
-        });
+        }, ServiceLifetime.Singleton, ServiceLifetime.Singleton);
 
         var app = builder.Build();
 
@@ -35,7 +35,6 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseRouting();
-        app.MapControllerRoute("default", "api");
         app.MapControllers();
 
         app.UseAuthorization();
