@@ -1,14 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace StringBin.Models;
 
-[PrimaryKey(nameof(Id))]
 public class StringBinEntry
 {
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [JsonPropertyName("id")]
-    public Guid Id { get; }
+    public int Id { get; }
     [JsonPropertyName("content")]
     public StringBinContent Content { get; }
 
@@ -16,27 +18,22 @@ public class StringBinEntry
     {
     }
 
-    public StringBinEntry(string title, string body, Guid id) : this(new(title, body), id)
+    public StringBinEntry(string title, string body, int id) : this(new(title, body), id)
     {
     }
 
-    public StringBinEntry(StringBinContent content, Guid id)
+    public StringBinEntry(StringBinContent content, int id)
     {
         Content = content;
         Id = id;
     }
 
-    public class StringBinContent
+    public class StringBinContent(string title, string body)
     {
         [JsonPropertyName("title")]
-        public string Title { get; }
-        [JsonPropertyName("body")]
-        public string Body { get; }
+        public string Title { get; } = title;
 
-        public StringBinContent(string title, string body)
-        {
-            Title = title;
-            Body = body;
-        }
+        [JsonPropertyName("body")]
+        public string Body { get; } = body;
     }
 }

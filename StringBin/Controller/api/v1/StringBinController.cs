@@ -12,8 +12,7 @@ public class StringBinController(StringBinDbContext db) : ControllerBase
     [HttpPost]
     public async Task<ActionResult> AddEntry(StringBinEntry.StringBinContent content)
     {
-        var guid = Guid.NewGuid();
-        var entry = new StringBinEntry(content, guid);
+        var entry = new StringBinEntry(content, default);
 
         db.Add(entry);
         await db.SaveChangesAsync();
@@ -24,12 +23,12 @@ public class StringBinController(StringBinDbContext db) : ControllerBase
 
         return new JsonResult(new
         {
-            id = guid
+            id = entry.Id
         });
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetEntry(Guid id)
+    public async Task<ActionResult> GetEntry(int id)
     {
         var entry = await db.EntrySet.FindAsync(id);
 
