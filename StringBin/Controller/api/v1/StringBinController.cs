@@ -12,14 +12,13 @@ public class StringBinController(StringBinDbContext db) : ControllerBase
     [HttpPost]
     public async Task<ActionResult> AddEntry(StringBinEntry.StringBinContent content)
     {
-        var entry = new StringBinEntry(content, default);
+        var entry = new StringBinEntry(content);
 
         db.Add(entry);
         await db.SaveChangesAsync();
 
-        var entries = await db.EntrySet.ToListAsync();
-        foreach (var e in entries)
-            Console.WriteLine($"Id: {e.Id}\nTitle: {e.Content.Title}\nBody: {e.Content.Body}");
+        var count = await db.EntrySet.CountAsync();
+        Console.WriteLine($"{count} entries exist now");
 
         return new JsonResult(new
         {

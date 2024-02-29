@@ -5,27 +5,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace StringBin.Models;
 
+[PrimaryKey(nameof(Id))]
 public class StringBinEntry
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [JsonPropertyName("id")]
-    public int Id { get; }
+    public int? Id { get; } = null;
     [JsonPropertyName("content")]
     public StringBinContent Content { get; }
 
-    private StringBinEntry()
+    private StringBinEntry() 
     {
     }
 
-    public StringBinEntry(string title, string body, int id) : this(new(title, body), id)
+    public StringBinEntry(string title, string body) : this(new(title, body))
     {
     }
 
-    public StringBinEntry(StringBinContent content, int id)
+    public StringBinEntry(StringBinContent content)
     {
         Content = content;
-        Id = id;
     }
 
     public class StringBinContent(string title, string body)
